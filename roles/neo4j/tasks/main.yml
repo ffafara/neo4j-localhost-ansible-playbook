@@ -99,4 +99,12 @@
   register: neo4j_change_password
   changed_when: neo4j_change_password.stdout.find('Invalid username or password') == -1
 
+- name: add Person uniqueness contraint
+  sudo: yes
+  sudo_user: "{{neo4j_user}}"
+  command: 'bin/neo4j-shell -c "CREATE CONSTRAINT ON (person:Person) ASSERT person.name IS UNIQUE;"'
 
+- name: add Company uniqueness contraint
+  sudo: yes
+  sudo_user: "{{neo4j_user}}"
+  command: 'bin/neo4j-shell -c "CREATE CONSTRAINT ON (company:Company) ASSERT company.name IS UNIQUE;"'
