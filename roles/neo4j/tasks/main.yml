@@ -102,9 +102,13 @@
 - name: add Person uniqueness contraint
   sudo: yes
   sudo_user: "{{neo4j_user}}"
-  command: 'bin/neo4j-shell -c "CREATE CONSTRAINT ON (person:Person) ASSERT person.name IS UNIQUE;"'
+  command: ./neo4j-shell -c "CREATE CONSTRAINT ON (person:Person) ASSERT person.name IS UNIQUE;"
+  args:
+    chdir: {{neo4j_path}}/neo4j-community-{{neo4j_version}}/bin/
 
 - name: add Company uniqueness contraint
   sudo: yes
   sudo_user: "{{neo4j_user}}"
-  command: 'bin/neo4j-shell -c "CREATE CONSTRAINT ON (company:Company) ASSERT company.name IS UNIQUE;"'
+  command: './neo4j-shell -c "CREATE CONSTRAINT ON (company:Company) ASSERT company.name IS UNIQUE;"'
+  args:
+    chdir: {{neo4j_path}}/neo4j-community-{{neo4j_version}}/bin/
