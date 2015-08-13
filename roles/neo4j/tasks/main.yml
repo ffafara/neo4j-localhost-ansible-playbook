@@ -64,13 +64,22 @@
   sudo: yes
   file: src={{neo4j_path}}/neo4j-community-{{neo4j_version}}/bin/neo4j dest=/etc/init.d/neo4j state=link
 
-- name: set JAVA_HOME
+- name: set JAVA_HOME for init script
   sudo: yes
   sudo_user: "{{neo4j_user}}"
   lineinfile: dest={{neo4j_path}}/neo4j-community-{{neo4j_version}}/bin/neo4j
     regexp="^JAVA_HOME="
     line="JAVA_HOME={{ lookup('env','JAVA_HOME') }}"
     insertbefore="^FRIENDLY_NAME="
+    state=present
+
+- name: set JAVA_HOME for neo4j-shell
+  sudo: yes
+  sudo_user: "{{neo4j_user}}"
+  lineinfile: dest={{neo4j_path}}/neo4j-community-{{neo4j_version}}/bin/neo4j-shell
+    regexp="^JAVA_HOME="
+    line="JAVA_HOME={{ lookup('env','JAVA_HOME') }}"
+    insertbefore="^RUN_FROM="
     state=present
 
 - name: Configure Neo4j server properties
